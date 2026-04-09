@@ -1,0 +1,24 @@
+{
+  "name": "trip-clone",
+  "version": "1.0.0",
+  "description": "This is a clone of EaseMyTrip.com",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "mongoose": "^6.13.8",
+    "open": "^10.2.0",
+    "pdfkit": "^0.17.2"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

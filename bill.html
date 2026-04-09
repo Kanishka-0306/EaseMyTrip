@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation - EaseMyTrip</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1853A2 0%, #2196f3 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        #billContainer {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            border-radius: 15px;
+        }
+
+        .bill-header {
+            text-align: center;
+            border-bottom: 3px solid #1853A2;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .logo-section {
+            margin-bottom: 15px;
+        }
+
+        .logo-section img {
+            height: 60px;
+        }
+
+        .bill-header h1 {
+            color: #1853A2;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            color: #4caf50;
+            margin-bottom: 15px;
+        }
+
+        .bill-section {
+            margin-bottom: 25px;
+        }
+
+        .bill-section h2 {
+            color: #1853A2;
+            font-size: 18px;
+            margin-bottom: 12px;
+            border-bottom: 2px solid #e3f2fd;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bill-section h2 i {
+            color: #2196f3;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-row label {
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+        }
+
+        .info-row span {
+            color: #333;
+            font-size: 14px;
+        }
+
+        .flight-route {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            font-size: 22px;
+            font-weight: bold;
+            color: #1853A2;
+        }
+
+        .flight-route .material-icons {
+            margin: 0 15px;
+            font-size: 28px;
+            color: #2196f3;
+        }
+
+        .price-breakdown {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px solid #2196f3;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 15px;
+        }
+
+        .price-row.total {
+            border-top: 2px solid #1853A2;
+            margin-top: 10px;
+            padding-top: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1853A2;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 15px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .btn-download {
+            background: #1853A2;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #0d3a6b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(24, 83, 162, 0.3);
+        }
+
+        .btn-print {
+            background: #2196f3;
+            color: white;
+        }
+
+        .btn-print:hover {
+            background: #1976d2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn-home {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-home:hover {
+            background: #388e3c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .button-container {
+                display: none !important;
+            }
+
+            #billContainer {
+                box-shadow: none;
+                padding: 20px;
+                margin: 0;
+                max-width: 100%;
+            }
+        }
+
+        .booking-ref {
+            text-align: center;
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe49c 100%);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #ffc107;
+        }
+
+        .booking-ref strong {
+            color: #856404;
+            font-size: 18px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .passenger-details {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .passenger-details h3 {
+            color: #1853A2;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .status-success {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            #billContainer {
+                padding: 20px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="billContainer">
+        <div class="bill-header">
+            <div class="logo-section">
+                <img src="icons/easemy.png" alt="EaseMyTrip" onerror="this.style.display='none'">
+            </div>
+            <div class="success-icon">✓</div>
+            <h1>Booking Confirmed!</h1>
+            <p>Thank you for booking with EaseMyTrip</p>
+        </div>
+
+        <div class="booking-ref">
+            <strong>Booking ID: <span id="bookingId">Loading...</span></strong>
+        </div>
+
+        <div class="two-column">
+            <div class="bill-section">
+                <h2><i class="material-icons">person</i>Passenger Details</h2>
+                <div class="info-row">
+                    <label>Email:</label>
+                    <span id="userEmail">Loading...</span>
+                </div>
+                <div class="passenger-details">
+                    <h3>Travellers</h3>
+                    <div class="info-row">
+                        <label>Adults:</label>
+                        <span id="adultCount">0</span>
+                    </div>
+                    <div class="info-row">
+                        <label>Children:</label>
+                        <span id="childCount">0</span>
+                    </div>
+                    <div class="info-row">
+                        <label>Infants:</label>
+                        <span id="infantCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bill-section">
+                <h2><i class="material-icons">payment</i>Transaction Details</h2>
+                <div class="info-row">
+                    <label>Transaction ID:</label>
+                    <span id="transactionId">Loading...</span>
+                </div>
+                <div class="info-row">
+                    <label>Payment Date:</label>
+                    <span id="paymentDate">-</span>
+                </div>
+                <div class="info-row">
+                    <label>Payment Status:</label>
+                    <span class="status-success">Success</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bill-section">
+            <h2><i class="material-icons">flight_takeoff</i>Flight Details</h2>
+            
+            <div class="flight-route">
+                <span id="sourceCity">Loading...</span>
+                <span class="material-icons">flight_takeoff</span>
+                <span id="destCity">Loading...</span>
+            </div>
+
+            <div class="info-row">
+                <label>Airline:</label>
+                <span id="airlineName">Loading...</span>
+            </div>
+            <div class="info-row">
+                <label>Flight Number:</label>
+                <span id="flightNumber">Loading...</span>
+            </div>
+            <div class="info-row">
+                <label>Journey Date:</label>
+                <span id="journeyDate">Loading...</span>
+            </div>
+            <div class="info-row">
+                <label>Departure Time:</label>
+                <span id="departureTime">--:--</span>
+            </div>
+            <div class="info-row">
+                <label>Arrival Time:</label>
+                <span id="arrivalTime">--:--</span>
+            </div>
+            <div class="info-row">
+                <label>Duration:</label>
+                <span id="flightDuration">--</span>
+            </div>
+        </div>
+
+        <div class="bill-section">
+            <h2><i class="material-icons">account_balance_wallet</i>Payment Summary</h2>
+            <div class="price-breakdown">
+                <div class="price-row">
+                    <span>Base Fare:</span>
+                    <span id="baseFare">₹0</span>
+                </div>
+                <div class="price-row">
+                    <span>Taxes & Fees:</span>
+                    <span id="taxes">₹779</span>
+                </div>
+                <div class="price-row total">
+                    <span>Total Amount Paid:</span>
+                    <span id="totalAmount">₹0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button class="btn btn-download" onclick="downloadPDF()">
+                <span class="material-icons">download</span>
+                Download PDF
+            </button>
+            <button class="btn btn-print" onclick="window.print()">
+                <span class="material-icons">print</span>
+                Print Bill
+            </button>
+            <button class="btn btn-home" onclick="window.location.href='index.html'">
+                <span class="material-icons">home</span>
+                Go to Home
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        console.log("🧾 Bill page loaded");
+        
+        // ===== LOAD BOOKING & PAYMENT DATA =====
+        const lastBooking = JSON.parse(localStorage.getItem('lastBooking'));
+        const lastPayment = JSON.parse(localStorage.getItem('lastPayment'));
+
+        console.log('📄 Last Booking:', lastBooking);
+        console.log('💳 Last Payment:', lastPayment);
+
+        // ===== CALCULATE TIME DIFFERENCE =====
+        function calculateTimeDiff(takeoff, landing) {
+            if (!takeoff || !landing) return 'N/A';
+            
+            const takeoffMin = parseInt(takeoff.slice(0, 2)) * 60 + parseInt(takeoff.slice(3, 5));
+            let landingMin = parseInt(landing.slice(0, 2)) * 60 + parseInt(landing.slice(3, 5));
+            
+            if (landingMin < takeoffMin) landingMin += 24 * 60;
+            
+            const hours = Math.floor((landingMin - takeoffMin) / 60);
+            const minutes = (landingMin - takeoffMin) % 60;
+            
+            return `${hours}h ${minutes}m`;
+        }
+
+        // ===== POPULATE BILL DATA =====
+        if (lastBooking && lastPayment) {
+            console.log("✅ Bill data found, rendering...");
+            
+            // Booking Reference
+            document.getElementById('bookingId').innerText = lastBooking.bookingId || 'N/A';
+            
+            // Passenger Details
+            document.getElementById('userEmail').innerText = lastBooking.userEmail || 'N/A';
+            document.getElementById('adultCount').innerText = lastBooking.passengers?.adults || 0;
+            document.getElementById('childCount').innerText = lastBooking.passengers?.children || 0;
+            document.getElementById('infantCount').innerText = lastBooking.passengers?.infants || 0;
+            
+            // Flight Details
+            const flight = lastBooking.flightDetails;
+            document.getElementById('sourceCity').innerText = flight.source || 'N/A';
+            document.getElementById('destCity').innerText = flight.destination || 'N/A';
+            document.getElementById('airlineName').innerText = flight.airline_name || 'N/A';
+            document.getElementById('flightNumber').innerText = `${flight.aircraft_code || 'N/A'}-${flight.aircraft_number || 'N/A'}`;
+            document.getElementById('journeyDate').innerText = flight.journey_date || 'N/A';
+            document.getElementById('departureTime').innerText = flight.takeoff_time || 'N/A';
+            document.getElementById('arrivalTime').innerText = flight.landing_time || 'N/A';
+            
+            // Calculate duration
+            const timeDiff = calculateTimeDiff(flight.takeoff_time, flight.landing_time);
+            document.getElementById('flightDuration').innerText = timeDiff;
+            
+            // Payment Summary
+            document.getElementById('baseFare').innerText = `₹${lastBooking.basePrice || 0}`;
+            document.getElementById('taxes').innerText = `₹${lastBooking.taxes || 779}`;
+            document.getElementById('totalAmount').innerText = `₹${lastBooking.totalAmount || 0}`;
+            
+            // Transaction Details
+            document.getElementById('transactionId').innerText = lastPayment.transactionId || 'N/A';
+            
+            const paymentDate = new Date(lastPayment.createdAt || lastPayment.paymentDate);
+            document.getElementById('paymentDate').innerText = paymentDate.toLocaleString('en-IN', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            console.log("✅ Bill rendered successfully!");
+            
+        } else {
+            console.error("❌ No booking data found!");
+            document.getElementById('billContainer').innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div style="font-size: 60px; color: #f44336;">⚠️</div>
+                    <h2 style="color: #1853A2; margin: 20px 0;">No Booking Data Found</h2>
+                    <p style="color: #666; margin-bottom: 20px;">
+                        Unable to load booking details. Please try again.
+                    </p>
+                    <button onclick="window.location.href='index.html'" 
+                            style="padding: 12px 30px; background: #1853A2; color: white; 
+                                   border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">
+                        Go to Home
+                    </button>
+                </div>
+            `;
+        }
+
+        // ===== DOWNLOAD PDF FUNCTION =====
+        window.downloadPDF = async function() {
+            console.log("📥 Downloading PDF...");
+            const { jsPDF } = window.jspdf;
+            
+            const buttonContainer = document.querySelector('.button-container');
+            buttonContainer.style.display = 'none';
+            
+            try {
+                const canvas = await html2canvas(document.getElementById('billContainer'), {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false,
+                    backgroundColor: '#ffffff'
+                });
+                
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210;
+                const pageHeight = 297;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                const imgData = canvas.toDataURL('image/png');
+                
+                if (imgHeight <= pageHeight) {
+                    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                } else {
+                    const scaledHeight = pageHeight;
+                    const scaledWidth = (canvas.width * pageHeight) / canvas.height;
+                    pdf.addImage(imgData, 'PNG', 0, 0, scaledWidth, scaledHeight);
+                }
+                
+                const bookingId = document.getElementById('bookingId').innerText;
+                pdf.save(`EaseMyTrip_Booking_${bookingId}.pdf`);
+                
+                console.log("✅ PDF downloaded successfully!");
+                
+            } catch (error) {
+                console.error('❌ PDF generation error:', error);
+                alert('Failed to generate PDF. Please try printing instead.');
+            } finally {
+                buttonContainer.style.display = 'flex';
+            }
+        }
+    </script>
+</body>
+</html>

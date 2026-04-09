@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EaseMyTrip - Login / Signup</title>
+
+<!-- ✅ Corrected Font Awesome CDN -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#6ec1e4,#2196f3);
+  display:flex;justify-content:center;align-items:center;
+}
+.bg-modal-signup,.bg-modal-password{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background-color:rgba(0,0,0,.5);
+  display:flex;justify-content:center;align-items:center;
+}
+.modal-content{
+  background:#fff;
+  width:380px;
+  padding:25px 30px;
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,.2);
+  animation:slideIn .3s ease;
+}
+@keyframes slideIn{
+  from{transform:translateY(-30px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+.loginIn{
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:600;font-size:18px;color:#1a73e8;margin-bottom:15px;
+}
+.loginIn i{cursor:pointer;color:#888;}
+.password{display:flex;align-items:center;gap:10px;}
+.emailIdNumber{font-size:14px;color:#333;margin-bottom:10px;}
+.form input{
+  width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;
+  font-size:14px;margin-bottom:15px;transition:all .3s ease;
+}
+.form input:focus{border-color:#1a73e8;box-shadow:0 0 3px rgba(26,115,232,.3);}
+.signupContinue{
+  width:100%;padding:12px;border:none;border-radius:8px;
+  background-color:#1a73e8;color:#fff;font-weight:600;cursor:pointer;
+}
+.signupContinue:hover{background-color:#155fc1;}
+.signUpPara{font-size:13px;color:#555;text-align:center;line-height:1.6;}
+.signUpPara span{color:#1a73e8;font-weight:500;cursor:pointer;}
+.text-right{text-align:right;}
+.loginOTP{margin-top:15px;text-align:center;}
+#close-sign-up-form,#close-pass-up-form{font-size:18px;}
+#close-sign-up-form:hover,#close-pass-up-form:hover{color:#1a73e8;}
+</style>
+</head>
+<body>
+
+<div id="modalContainer"></div>
+
+<script>
+function signUpHtml(){
+return `<div class="bg-modal-signup">
+  <div class="modal-content">
+    <div class="contentSignup">
+      <div class="loginIn">
+        <strong>Login or Create an account</strong>
+        <i class="fas fa-times" id="close-sign-up-form"></i>
+      </div>
+      <div class="emailIdNumber">Email ID</div>
+      <div class="form">
+        <form id="signupForm">
+          <input type="email" id="signupEmail" placeholder="Enter Email" required>
+          <input type="password" id="signupPassword" placeholder="Create Password" required>
+          <button type="submit" class="signupContinue">Signup</button>
+        </form>
+      </div>
+      <div class="signUpPara">
+        Already have an account? <span id="switchToLogin">Login</span>
+      </div>
+    </div>
+  </div>
+</div>`;
+}
+
+function passwordHtml(){
+return `<div class="bg-modal-password">
+  <div class="modal-content">
+    <div class="contentSignup">
+      <div class="loginIn">
+        <div class="password">
+          <i class="fas fa-arrow-left" id="backToSignup"></i>
+          <strong>Password Authentication</strong>
+        </div>
+        <i class="fas fa-times" id="close-pass-up-form"></i>
+      </div>
+      <div class="emailIdNumber">Enter your registered email and password.</div>
+      <div class="form">
+        <form id="loginForm">
+          <input type="email" id="loginEmail" placeholder="Email" required>
+          <input type="password" id="loginPassword" placeholder="Password" required>
+          <div class="text-right signUpPara"><span>Reset Password</span></div>
+          <button type="submit" class="signupContinue login">Login</button>
+        </form>
+      </div>
+      <div class="signUpPara">Don't have an account? <span id="switchToSignup">Signup</span></div>
+    </div>
+  </div>
+</div>`;
+}
+
+const modalContainer = document.getElementById('modalContainer');
+
+// Login auto show on page load
+window.addEventListener('DOMContentLoaded', ()=>{
+  modalContainer.innerHTML = passwordHtml();
+  attachLoginEvents();
+});
+
+function attachLoginEvents(){
+  document.getElementById('close-pass-up-form').onclick=()=>modalContainer.innerHTML='';
+  document.getElementById('switchToSignup').onclick=()=>{
+    modalContainer.innerHTML=signUpHtml();
+    attachSignupEvents();
+  };
+  document.getElementById('loginForm').addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    const email=document.getElementById('loginEmail').value;
+    const password=document.getElementById('loginPassword').value;
+    if(!email||!password)return alert("Please enter email & password!");
+    try{
+      const res=await fetch('http://localhost:5005/users/login',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email,password})
+      });
+      const data=await res.json();
+      alert(data.message||"Login successful!");
+      if(res.status===200){
+        localStorage.setItem("loggedInUser", JSON.stringify({ email }));
+        window.location.href="/index.html";
+      }
+    }catch(err){alert("Server error. Check backend.");}
+  });
+}
+
+function attachSignupEvents(){
+  document.getElementById('close-sign-up-form').onclick=()=>modalContainer.innerHTML='';
+  document.getElementById('switchToLogin').onclick=()=>{
+    modalContainer.innerHTML=passwordHtml();
+    attachLoginEvents();
+  };
+  document.getElementById('signupForm').addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    const email=document.getElementById('signupEmail').value;
+    const password=document.getElementById('signupPassword').value;
+    if(!email||!password)return alert("Please enter email & password!");
+    try{
+      const res=await fetch('http://localhost:5005/users/signup',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({email,password})
+      });
+      const data=await res.json();
+      alert(data.message||"Signup successful!");
+      if(res.status===201){
+        modalContainer.innerHTML=passwordHtml();
+        attachLoginEvents();
+      }
+    }catch(err){alert("Server error. Check backend.");}
+  });
+}
+</script>
+</body>
+</html>

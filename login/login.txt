@@ -1,0 +1,3 @@
+cd project-folder
+npm install express mongoose bcryptjs cors
+node server.js

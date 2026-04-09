@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="flightSearch.css">
+    <link rel="stylesheet" href=".\styles\header.css">
+    <link rel="stylesheet" href="./footer/footer.css">
+z
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+        integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+        <title>FlightList Lowest Airfare, Flight Tickets, Cheap Air Tickets - EaseMyTrip.com</title>
+        <link rel="icon" type="image/png" href="icons/easemytrip-logo.png">
+        <script src="https://kit.fontawesome.com/4008f4a305.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <div id="navbarPlace">
+
+    </div>
+    <!-- Prottay -->
+
+    <div id="search">
+        <div id="search_catagory">
+            <ul>
+                <li id="one" class="search_cat">One-Way</li>
+                <li id="round" class="search_cat">Round-Way</li>
+                <li id="multi" class="search_cat">Multi-City</li>
+            </ul>
+        </div>
+        <div id="search_box" class="flexIt">
+            <div id="fromBox" class="">
+                <div id="frombox" class="searchfield flexIt">
+                    <input type="text" name="" id="from" placeholder="From">
+                    <div id="swap">
+                        <img src="icons/change1.PNG" alt="" class="" id="">
+                    </div>
+                </div>
+                <div id="fromResults" class="airportAutocomplete"></div>
+            </div>
+            <div id="toBox" class="">
+                <div id="tobox" class="searchfield">
+                    <input type="text" name="" id="to" placeholder="To">
+                </div>
+                <div id="toResults" class="airportAutocomplete"></div>
+            </div>
+            <div id="depart" class="searchfield point">
+                <input type="date" id="departDate" class="point">
+            </div>
+            <div id="arrive" class="searchfield point">
+                <input type="date" id="arriveDate" class="point" value="0" placeholder="Return" disabled>
+            </div>
+            <div id="travel" class="point">
+                <div id="travellers" class="searchfield flexIt droptravel">
+                    <label for="" id="travellerCount" class="labl point">1 Traveller(s)</label>
+                    <img src="icons/down.png" alt="" class="icon">
+                </div>
+                <div id="travellerOption" class="options">
+                    <div class="flexpass">
+                        <div class="pass">
+                            <label for="" class="passType">Adult</label>
+                            <label for="" class="passAge">(12+ yrs)</label>
+                        </div>
+                        <div class="passCount flexIt">
+                            <button id="adult_del">-</button>
+                            <label for="" id="adultCount">1</label>
+                            <button id="adult_add">+</button>
+                        </div>
+                    </div>
+                    <div class="flexpass">
+                        <div class="pass">
+                            <label for="" class="passType">Children</label>
+                            <label for="" class="passAge">(2-12 yrs)</label>
+                        </div>
+                        <div class="passCount flexIt">
+                            <button id="children_del">-</button>
+                            <label for="" id="childrenCount">0</label>
+                            <button id="children_add">+</button>
+                        </div>
+                    </div>
+                    <div class="flexpass">
+                        <div class="pass">
+                            <label for="" class="passType">Infants</label>
+                            <label for="" class="passAge">(below 2 yrs)</label>
+                        </div>
+                        <div class="passCount flexIt">
+                            <button id="infant_del">-</button>
+                            <label for="" id="infantCount">0</label>
+                            <button id="infant_add">+</button>
+                        </div>
+                    </div>
+                    <br>
+                    <div>
+                        <button id="travellerCountDone" class="classDone">Done</button>
+                    </div>
+                </div>
+            </div>
+            <div id="travelClass" class="point">
+                <div id="travellerClass" class="searchfield flexIt droptravel">
+                    <label for="" class="labl point" id="flightClass">Economy</label>
+                    <img src="icons/down.png" alt="" class="icon">
+                </div>
+                <div id="classOption" class="options">
+                    <div>
+                        <input class="point" type="radio" name="classes" id="economy" value="Economy" checked>
+                        <label class="point" for="economy">Economy</label>
+                    </div>
+                    <div>
+                        <input class="point" type="radio" name="classes" id="prem" value="Prem.Economy">
+                        <label class="point" for="prem">Prem.Economy</label>
+                    </div>
+                    <div>
+                        <input class="point" type="radio" name="classes" id="business" value="Business">
+                        <label class="point" for="business">Business</label>
+                    </div>
+                    <br>
+                    <div>
+                        <button id="classSubmit" class="classDone">Done</button>
+                    </div>
+                </div>
+            </div>
+            <div id="searchFlight" class="point">
+                <button id="finalSearch">
+                    <img src="icons/search.svg" alt="" class="icon">
+                    <div>
+                        SEARCH
+                    </div>
+                </button>
+            </div>
+        </div>
+        <div id="search_end">
+            <div id="travellerType">
+                <div id="ttype">
+                    <div class="flexMe">
+                        <input type="radio" name="travl" id="defence" class="trvl" value="1">
+                        <label class="trvl_type" for="defence">Defence Forces</label>
+                    </div>
+                    <div class="flexMe">
+                        <input type="radio" name="travl" id="student" class="trvl" value="2">
+                        <label class="trvl_type" for="student">Students</label>
+                    </div>
+                    <div class="flexMe">
+                        <input type="radio" name="travl" id="senior" class="trvl" value="3">
+                        <label class="trvl_type" for="senior">Senior Citizens</label>
+                    </div>
+                    <div class="flexMe">
+                        <input type="radio" name="travl" id="doctor" class="trvl" value="4">
+                        <label class="trvl_type" for="doctor">Doctors & Nurses</label>
+                    </div>
+                    <div class="flexMe">
+                        <input type="radio" name="travl" id="train" class="trvl" value="5">
+                        <label class="trvl_type" for="train">Train Waitlisted</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="flightBody">
+        <div id="nextPrev">
+            <div class="flexCenter">
+                <a href="http://" target="_blank" rel="noopener noreferrer">Previous Day </a>
+                <p> &nbsp; | &nbsp;</p>
+                <a href="http://" target="_blank" rel="noopener noreferrer"> Next Day </a>
+            </div>
+        </div>
+        <div id="main">
+            <div id="left">
+                <div id="leftHead" class="flexSpace left">
+                    <label for="">FILTER</label>
+                    <label for="" class="blue">CLEAR ALL</label>
+                </div>
+                <div id="leftPrice" class="left left_entry">
+                    <div class="dropdown flexLeft">
+                        <img src="icons/down-arrow.png" id="price_icon" class="dropicon down" alt="">
+                        <label for="price_icon">Price Range</label>
+                    </div>
+                    <div class="left_body">
+                        <div class="">
+                            <input type="range" name="pricerange" id="pricerange" class="range" min="0" max="100">
+                        </div>
+                        <div>
+                            <label for="" id="fromPrice">Rs. 5555 - &nbsp;</label>
+                            <label for="" id="toPrice">Rs. 10,000</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="leftDeparture" class="left left_entry">
+                    <div class="dropdown flexLeft">
+                        <img src="icons/down-arrow.png" id="departure_icon" class="dropicon down" alt="">
+                        <label for="price_icon">Departure time from </label>
+                        <label for="" id="departLeft"> Delhi</label>
+                    </div>
+                    <div class="left_body">
+                        <div class="">
+                            <input type="range" name="pricerange" id="pricerange" class="range" min="1" max="24">
+                        </div>
+                        <div>
+                            <label for="" id="">0 Hr - &nbsp;</label>
+                            <label for="" id="toHourDepart">24 Hr</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="leftArrival" class="left left_entry">
+                    <div class="dropdown flexLeft">
+                        <img src="icons/down-arrow.png" id="arrival_icon" class="dropicon down" alt="">
+                        <label for="price_icon">Arrival time at </label>
+                        <label for="" id="arriveLeft"> Mumbai</label>
+                    </div>
+                    <div class="left_body">
+                        <div class="">
+                            <input type="range" name="pricerange" id="pricerange" class="range" min="1" max="24">
+                        </div>
+                        <div>
+                            <label for="" id="">0 Hr - &nbsp;</label>
+                            <label for="" id="toHourArrive">24 Hr</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="leftStop" class="left left_entry">
+                    <div class="flexSpace">
+                        <div class="dropdown flexLeft">
+                            <img src="icons/down-arrow.png" id="price_icon" class="dropicon down" alt="">
+                            <label for="price_icon">Stops</label>
+                        </div>
+                        <div class="flexCenter showall">
+                            <input type="checkbox" name="" id="stopsAll">
+                            <label for="stopsAll">Show All</label>
+                        </div>
+                    </div>
+                    <div class="left_body">
+                        <br>
+                        <div class="flexLeft leftOption">
+                            <input type="checkbox" name="" id="nonstop">
+                            <label for="nonstop">Non Stop</label>
+                        </div>
+                        <div class="flexLeft leftOption">
+                            <input type="checkbox" name="" id="onestop">
+                            <label for="onestop">One Stop</label>
+                        </div>
+                        <div class="flexLeft leftOption">
+                            <input type="checkbox" name="" id="twostop">
+                            <label for="twostop">2+ Stops</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div id="leftAirlines" class="left left_entry">
+                    <div class="flexSpace">
+                        <div class="dropdown flexLeft">
+                            <img src="icons/down-arrow.png" id="price_icon" class="dropicon down" alt="">
+                            <label for="price_icon">Airlines</label>
+                        </div>
+                        <div class="flexCenter showall">
+                            <input type="checkbox" name="" id="airlinesAll">
+                            <label for="airlinesAll">Show All</label>
+                        </div>
+                    </div>
+                    <div class="left_body">
+                        <br>
+                        <div class="flexSpace leftOption">
+                            <div class="leftOption">
+                                <input type="checkbox" name="" id="gofirst">
+                                <label for="gofirst">
+                                    <img src="icons/gofirst.png" class="dropicon" alt="">
+                                    Go First
+                                </label>
+                            </div>
+                            <label for="" id="gofirstmin">Rs. 5945</label>
+                        </div>
+                        <div class="flexSpace leftOption">
+                            <div class="leftOption">
+                                <input type="checkbox" name="" id="indigo">
+                                <label for="indigo">
+                                    <img src="icons/indigo.jpg" class="dropicon" alt="">
+                                    Indigo
+                                </label>
+                            </div>
+                            <label for="" id="indigomin">Rs. 5945</label>
+                        </div>
+                        <div class="flexSpace leftOption">
+                            <div class="leftOption">
+                                <input type="checkbox" name="" id="airindia">
+                                <label for="airindia">
+                                    <img src="icons/airindia.jpg" class="dropicon" alt="">
+                                    Air India
+                                </label>
+                            </div>
+                            <label for="" id="airindiamin">Rs. 5945</label>
+                        </div>
+                        <div class="flexSpace leftOption">
+                            <div class="leftOption">
+                                <input type="checkbox" name="" id="airasia">
+                                <label for="airasia">
+                                    <img src="icons/airasia.png" class="dropicon" alt="">
+                                    Air Asia
+                                </label>
+                            </div>
+                            <label for="" id="airasiamin">Rs. 5945</label>
+                        </div>
+                        <div id="lastTwo">
+                            <div class="flexSpace leftOption">
+                                <div class="leftOption">
+                                    <input type="checkbox" name="" id="spicejet">
+                                    <label for="spicejet">
+                                        <img src="icons/spicejet.png" class="dropicon" alt="">
+                                        Spicejet
+                                    </label>
+                                </div>
+                                <label for="" id="spicejetmin">Rs. 5945</label>
+                            </div>
+                            <div class="flexSpace leftOption">
+                                <div class="leftOption">
+                                    <input type="checkbox" name="" id="vistara">
+                                    <label for="vistara">
+                                        <img src="icons/vistara.png" class="dropicon" alt="">
+                                        Vistara
+                                    </label>
+                                </div>
+                                <label for="" id="vistaramin">Rs. 5945</label>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="" id="moreair"> Show less - </label>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div id="right">
+                <div id="carausel">
+
+                </div>
+                <div id="rightfilter" class="flexSpace">
+                    <div id="airlinesBooking" class="littlefilter">
+                        AIRLINES
+                        <img src="icons/arrowdown.png" class="mini-icon" alt="">
+                    </div>
+                    <div id="departBooking" class="littlefilter">
+                        DEPART
+                        <img src="icons/arrowdown.png" class="mini-icon" alt="">
+                    </div>
+                    <div id="duration" class="littlefilter">
+                        DURATION
+                        <img src="icons/arrowdown.png" class="mini-icon" alt="">
+                    </div>
+                    <div id="arriveBooking" class="littlefilter">
+                        ARRIVE
+                        <img src="icons/arrowdown.png" class="mini-icon" alt="">
+                    </div>
+                    <div id="priceBooking" class="littlefilter">
+                        PRICE
+                        <img src="icons/arrowdown.png" class="mini-icon" alt="">
+                    </div>
+                    <div id="" class="littlefilter">
+                        RECOMMENDED
+                        <div id="recommended">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="bookBox" id="flightBookBox">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer part -->
+    <div id="placeFooter"></div>
+</body>
+
+</html>
+<script src="flightSearch.js"></script>
+<script type="module" src="./home/home.js"></script>
+<script src="./scripts/placingFlightList.js"></script>
+<script type="module">
+
+    import header from "./component/header.js";
+
+    let navBar = document.querySelector('#navbarPlace');
+    navBar.innerHTML = header();
+
+    // Ensure flight list is loaded after DOM is ready
+    window.addEventListener('DOMContentLoaded', () => {
+        if (typeof placeFlightList === 'function') {
+            placeFlightList();
+        }
+    });
+</script><script src="scripts/placingFlight.js"></script>
