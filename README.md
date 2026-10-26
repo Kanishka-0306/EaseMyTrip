@@ -1,8 +1,8 @@
-# EasyMyTrip – Flight Booking System ✈️
+# EaseMyTrip – Flight Booking System ✈️
 
 ## 📌 About the Project
 
-EasyMyTrip is a web-based flight booking system developed as an academic project. It demonstrates the basic workflow of a flight booking website, allowing users to search for flights and explore the booking process.
+EaseMyTrip is a web-based flight booking system developed as an academic project. It demonstrates the basic workflow of a flight booking website, allowing users to search for flights and explore the booking process.
 
 The project also includes an admin panel for managing flight-related information and viewing user details.
 
